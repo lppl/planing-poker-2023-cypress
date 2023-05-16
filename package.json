@@ -4,7 +4,8 @@
   "description": "Testing planing poker app",
   "main": "index.js",
   "scripts": {
-     "open": "cypress open"
+    "open": "cypress open",
+    "run": "cypress run"
   },
   "keywords": [],
   "author": "Lukasz Pietrek <lpietrek@gmail.com>",

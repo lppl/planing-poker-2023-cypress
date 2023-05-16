@@ -1,7 +1,10 @@
 /// <reference types="cypress" />
-Cypress.Commands.add("goHome", () => cy.visit("/"));
+import { dataTestId } from '../helpers/selectors';
 
-const testId = (id: string): string => {
-    return `[data-test-id=${id}]`;
-};
-Cypress.Commands.add("byId", (id: string) => cy.get(testId(id)));
+Cypress.Commands.add('createPokerRoom', (name: string) => {
+    cy.visit('/');
+    return cy.get(dataTestId('create-poker-room__form')).within(() => {
+        cy.get(dataTestId('create-poker-room__name-field')).type(name);
+        return cy.root().submit();
+    });
+});

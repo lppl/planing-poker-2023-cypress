@@ -1,15 +1,22 @@
-const id = () => Cypress._.random(0, 1e6);
+import { dataTestId, itemprop, itemscopeByType, SchemaType } from '../helpers/selectors';
+import { id } from '../helpers/id';
 
-describe("template spec", () => {
-    it("passes", () => {
-        cy.goHome();
-        const title = "Foobar";
-        cy.byId("create-room-form__name-field").type(title);
-        cy.byId("create-room-form__submit").click();
-        cy.get("[itemscope][itemtype='/schemas/poker-room.yml']")
-            .contains("[itemprop=name]", title)
-            .parent("[itemscope]")
-            .find("a")
-            .click();
+describe('Poker room', () => {
+    it('Poker room can be only created', () => {
+        const testTitle = `NewPokerRoomTitle::${id()}`;
+        cy.visit('/');
+
+        cy.get(dataTestId('create-poker-room__form')).within(() => {
+            cy.get(dataTestId('create-poker-room__name-field')).type(testTitle);
+            cy.root().submit();
+        });
+        cy.get(itemscopeByType(SchemaType.Room)).within(() => {
+            cy.get(itemprop('name')).contains(testTitle);
+            cy.root()
+                .then((el) => el.attr('itemid'))
+                .then((itemid) => {
+                    cy.get(itemprop('id')).contains(itemid);
+                });
+        });
     });
 });
