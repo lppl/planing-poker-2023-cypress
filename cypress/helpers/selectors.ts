@@ -1,5 +1,6 @@
 const enum SchemaType {
     Room = '/schemas/poker-room.yml',
+    Table = '/schemas/poker-table.yml',
 }
 
 const enum Role {
