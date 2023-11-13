@@ -1,18 +1,11 @@
 const enum SchemaType {
     Room = '/schemas/poker-room.yml',
     Table = '/schemas/poker-table.yml',
+    User = '/schemas/user-player.yml',
 }
 
-const enum Role {
-    CreatePokerRoom = 'createPokerRoom',
-}
-
-function dataTestId(testId: string) {
+function tid(testId: string) {
     return `[data-test-id="${testId}"]`;
-}
-
-function role(role: Role): string {
-    return `[role=${role}]`;
 }
 
 function itemscopeByType(type: SchemaType): string {
@@ -23,4 +16,4 @@ function itemprop(prop: string): string {
     return `[itemprop="${prop}"]`;
 }
 
-export { SchemaType, Role, itemscopeByType, itemprop, role, dataTestId };
+export { SchemaType, itemscopeByType, itemprop, tid };

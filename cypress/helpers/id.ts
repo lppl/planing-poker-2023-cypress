@@ -1,3 +1,4 @@
+let init = 0;
 export function id() {
-    return Cypress._.random(0, 1e6);
+    return (++init).toString().padStart(4, '0');
 }
