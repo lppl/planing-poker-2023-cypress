@@ -1,4 +1,4 @@
-import { itemprop, itemscopeByType, SchemaType } from '../helpers/selectors';
+import { itemprop, itemscopeByType, SchemaType, tid } from '../helpers/selectors';
 
 Cypress.config('defaultCommandTimeout', 100);
 
@@ -38,5 +38,24 @@ describe('Players', () => {
             .get(itemscopeByType(SchemaType.User))
             .find(itemprop('type'))
             .should('contain', 'guest');
+    });
+
+    it.only('You can rename your session after you click "edit name" button', () => {
+        cy.visit('/')
+            .get(itemscopeByType(SchemaType.User))
+            .find('button:contains("Edit")')
+            .click()
+            .get(tid('rename-player__form'))
+            .find('input[name=name]')
+            .type('new name{enter}')
+            // We check update on same page
+            .get(itemscopeByType(SchemaType.User))
+            .find(itemprop('name'))
+            .should('contain', 'new name')
+            // We check update have been persistent
+            .visit('/')
+            .get(itemscopeByType(SchemaType.User))
+            .find(itemprop('name'))
+            .should('contain', 'new name');
     });
 });
